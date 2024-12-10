@@ -5,8 +5,7 @@ from aiogram import types
 def choose_native_lang():
     buttons = [
         [types.InlineKeyboardButton(text='Русский', callback_data='ru_native')],
-    # [types.InlineKeyboardButton(text='English', callback_data='en_native')]
-    ]
+        ]
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
     return keyboard
 
@@ -14,7 +13,6 @@ def choose_native_lang():
 def will_learn_lang():
     buttons = [
         [types.InlineKeyboardButton(text='🇺🇸 English', callback_data='usa')],
-        # [types.InlineKeyboardButton(text='🇪🇸 Spanish', callback_data='spain')],
     ]
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
     return keyboard
@@ -85,7 +83,6 @@ def level():
         [types.InlineKeyboardButton(text='B1', callback_data='B1'),
         types.InlineKeyboardButton(text='B2', callback_data='B2')],
         [types.InlineKeyboardButton(text='C1', callback_data='C1')]
-        # types.InlineKeyboardButton(text='C2', callback_data='C2')]
     ]
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
     return keyboard
@@ -104,7 +101,6 @@ def settings():
     buttons = [
         [types.InlineKeyboardButton(text='Назад', callback_data='back')],
         [types.InlineKeyboardButton(text='Изменить уровень', callback_data='change_level')],
-        # [types.InlineKeyboardButton(text='Выбрать другой язык', callback_data='change_language')],
         [types.InlineKeyboardButton(text='Выбрать тематику слов', callback_data='choose_theme')],
         [types.InlineKeyboardButton(text='Изменить число изучаемых слов за сеанс', callback_data='update_quantity_words')]
     ]
@@ -126,11 +122,6 @@ def choose_theme():
     buttons = [
         [types.InlineKeyboardButton(text='Назад', callback_data='back_to_settings')],
         [types.InlineKeyboardButton(text='Сельское хозяйство', callback_data='agro')],
-        # types.InlineKeyboardButton(text='Тема 2', callback_data='theme2')],
-        # [types.InlineKeyboardButton(text='Тема 3', callback_data='theme3'),
-        # types.InlineKeyboardButton(text='Тема 4', callback_data='theme4')],
-        # [types.InlineKeyboardButton(text='Тема 5', callback_data='theme5'),
-        #  types.InlineKeyboardButton(text='Тема 6', callback_data='theme6')],
         [types.InlineKeyboardButton(text='Продолжить изучать слова текущего уровня',
                                     callback_data='сontinue_to_study_the_words')],
         [types.InlineKeyboardButton(text='Я просто хочу выучить 5000 слов', callback_data='5000')]
