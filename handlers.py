@@ -17,7 +17,6 @@ router = Router()
 users = db.Users('users')
 study_words_user = db.User_study_words('study_words_user')
 usa = db.DataBase_words_language('usa')
-# spain = db.DataBase_words_language('spain')
 rus = db.DataBase_words_language('rus')
 
 
