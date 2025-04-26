@@ -2,12 +2,11 @@ from aiogram import Router, types, F
 from aiogram.filters import Command
 import text_ru as text
 import keyboards_ru as keyboards
-import time
 import db
 import asyncio
 from aiogram.fsm.context import FSMContext
 from utils import Registration, New_quantity_words, Learn_words, CorrectAnswer, Exercise, Repeat, Mydict
-import datetime
+from openai import OpenAI
 import random as r
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 import json
@@ -18,7 +17,9 @@ users = db.Users('users')
 study_words_user = db.User_study_words('study_words_user')
 usa = db.DataBase_words_language('usa')
 rus = db.DataBase_words_language('rus')
-
+client = OpenAI(
+  api_key='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxMGEwYzQ5LWY4ZTUtNDhmNS04Y2Y5LWFmMWY4YWE3NTcxYiIsImlzRGV2ZWxvcGVyIjp0cnVlLCJpYXQiOjE3Mjk2MDk1NTksImV4cCI6MjA0NTE4NTU1OX0.FhQBjXT-hrTOhTwclY1yKPXs4M-dCLsx3MLlKi2TjjE',
+  base_url='https://bothub.chat/api/v2/openai/v1')
 
 @router.message(Command('start'))
 async def start_handler(msg, state: FSMContext):
@@ -489,6 +490,20 @@ async def starting_learn_words_3(timer, bot, user_id, quantity, words, all_words
             for word in words:
                 study_words_user.add_learnt_word(user_id, word)
         else:
+            level = users.get_level(user_id)
+            response = client.chat.completions.create(
+                messages=[
+                    {'role': 'system',
+                     'content': 'Ты — учитель английского языка.'},
+                    {
+                        'role': 'user',
+                        'content': f"Напиши по одной фразе использования слова из списка {all_words} на английсков языке если бы твой уровень владения английским был бы уровня {level}. Напиши только фразу и через дефис перевод без лишних слов.",
+                    }
+                ],
+                model='deepseek-chat-v3-0324:free',
+            )
+            await bot.send_message(chat_id=user_id,
+                                   text=f"Примеры использования изученных слов!\n\n{response.choices[0].message.content}")
             await bot.send_message(chat_id=user_id,
                                    text=text.reminder)
             await bot.send_message(chat_id=user_id,
